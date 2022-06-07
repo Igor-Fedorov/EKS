@@ -3,13 +3,26 @@ variable "region" {
   description = "AWS region"
 }
 
-provider "aws" {
-  region = "us-east-1"
-  access_key = "AWS_ACCESS_KEY_ID"
-  secret_key = "AWS_SECRET_ACCESS_KEY"
-
+variable "var_access_key" {
+  description = "AWS_ACCESS_KEY_ID"
+  type        = string
+  default = "AWS_ACCESS_KEY_ID"
+  sensitive = true
 }
 
+variable "var_secret_access_key" {
+  description = "AWS_SECRET_ACCESS_KEY"
+  type        = string
+  default = "AWS_SECRET_ACCESS_KEY"
+  sensitive = true
+}
+
+provider "aws" {
+  region = "us-east-1"
+  access_key = var.var_access_key
+  secret_key = var.var_secret_access_key
+
+}
 
 locals {
   tagEnv = "${terraform.workspace}-ifedorov" 
